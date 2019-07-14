@@ -43,32 +43,37 @@ static auto __ __attribute__((unused)) = []() {              // NOLINT
 
 class MyHashSet {
 public:
-    set<int> h;
+    vector<bool> v;
     /** Initialize your data structure here. */
     MyHashSet() {
-
+        v.resize(1024);
     }
 
     void add(int key) {
-        h.insert(key);
+        while (key > v.size())
+            v.resize(v.size() * 2);
+        v[key] = true;
     }
 
     void remove(int key) {
-        h.erase(key);
+        if (key < v.size())
+        v[key] = false;
     }
 
     /** Returns true if this set contains the specified element */
     bool contains(int key) {
-        return h.count(key) == 1;
+        return key < v.size() && v[key];
 
     }
 };
 
 
 void test1() {
+    unsigned long long x = 1;
+    cout << sizeof(x) << endl;
     MyHashSet* obj = new MyHashSet();
     obj->add(5);
-    obj->remove(5);
+//    obj->remove(5);
     obj->remove(50);
     bool param_3 = obj->contains(5);
 
